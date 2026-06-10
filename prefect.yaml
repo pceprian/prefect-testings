@@ -21,10 +21,15 @@ pull:
 #- prefect.deployments.steps.set_working_directory:
  #   directory: C:\Users\paula.ceprian\PREFECT
 - prefect.deployments.steps.git_clone:
-    repository: https://github.com/paula.ceprian/prefect-testings.git
+    id: clone_step
+    repository: https://github.com/pceprian/my_project_dbt.git
     branch: main  # O la rama en la que estés trabajando (ej. dev, master)
     # Si tu repositorio es privado, descomenta la línea de abajo apuntando al bloque que creamos:
     # credentials: "{{ prefect.blocks.github.mi-repositorio-github }}"
+- prefect.deployments.steps.set_working_directory:
+    directory: "{{ clone_step.directory }}"
+- prefect.deployments.steps.pip_install_requirements:
+    requirements_file: requirements.txt
 
 # the deployments section allows you to provide configuration
 # for deploying flows

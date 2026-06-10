@@ -1,7 +1,9 @@
 from prefect import flow, task
-#from prefect.blocks.system import String
+from prefect_github import GitHubCredentials
 
-#string_blocks = String.load("future-nba-champs")
+
+github_credentials_block = GitHubCredentials(token="my_token")
+github_credentials_block.save(name="my-github-credentials-block")
 
 @task
 def create_message():
